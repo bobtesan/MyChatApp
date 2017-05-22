@@ -30,7 +30,7 @@ public class register_activity extends AppCompatActivity {
     Button registerB;
     FirebaseAuth auth;
     ProgressBar progressBar;
-    DatabaseReference root= FirebaseDatabase.getInstance().getReference().child("Users");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +58,14 @@ public class register_activity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(register_activity.this, "You are successfully registered.", Toast.LENGTH_SHORT).show();
-                                DatabaseReference root2= FirebaseDatabase.getInstance().getReference().child("Users").child(username.getText().toString());
-                                DatabaseReference root3= FirebaseDatabase.getInstance().getReference().child("Users").child(username.getText().toString()).child(username.getText().toString());
+                                DatabaseReference root= FirebaseDatabase.getInstance().getReference().child("Users").child(username.getText().toString());
                                 progressBar.setVisibility(View.VISIBLE);
 
                                 Map<String,Object> map = new HashMap<String, Object>();
-                                map.put(username.getText().toString(),"");
-                                root2.updateChildren(map); // Users-> test
+                                map.put("Email",email.getText().toString());
+                                map.put("Username",username.getText().toString());
+                                root.updateChildren(map); // Users-> test
 
-                                root3.setValue(email.getText().toString()); // Users -> test-> child
 
                                 Intent i = new Intent(register_activity.this, MainActivity.class);
                                 startActivity(i);
