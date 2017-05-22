@@ -3,10 +3,12 @@ package com.example.raul.mychatapp.Activities;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.raul.mychatapp.R;
 import com.google.firebase.database.ChildEventListener;
@@ -15,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.OnDisconnect;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,10 +30,12 @@ public class ChatRoomActivity extends AppCompatActivity {
     EditText message;
     TextView conversation;
 
-    String email="test";
+    // String email="test";
+    String username = "test";
     String roomName;
 
     DatabaseReference root;
+    DatabaseReference getUser;
     private String temp_key;
 
     @Override
@@ -38,16 +43,18 @@ public class ChatRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+
         sendMessage = (Button) findViewById(R.id.sendMessage);
         message = (EditText) findViewById(R.id.message);
         conversation = (TextView) findViewById(R.id.textView2);
 
-        roomName=getIntent().getExtras().get("room_name").toString();
-        email=getIntent().getExtras().get("gett_email").toString();
+        roomName = getIntent().getExtras().get("room_name").toString();
+        //email=getIntent().getExtras().get("gett_email").toString();
 
         setTitle(" Room - " + roomName);
 
         root = FirebaseDatabase.getInstance().getReference().child("Rooms").child(roomName);
+        getUser = FirebaseDatabase.getInstance().getReference().child("Users");
 
         sendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +64,28 @@ public class ChatRoomActivity extends AppCompatActivity {
 
                 DatabaseReference message_root = root.child(temp_key); //inside message
                 Map<String, Object> map2 = new HashMap<String, Object>();
-                map2.put("name", email);
+                map2.put("username", username);
                 map2.put("msg", message.getText().toString());
                 message_root.updateChildren(map2);
                 message.setText("");
+
+            }
+        });
+        getUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String user;
+                for (DataSnapshot children : dataSnapshot.getChildren()) {
+                    for (DataSnapshot child : children.getChildren()) {
+                        if (child.getKey().equals("Username")) {
+                            Log.d("YOOO", child.getValue(String.class));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -92,8 +117,6 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     String chat_email, chat_msg;
