@@ -29,7 +29,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/logo_login" />
+            app:srcCompat="@mipmap/logo_login" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +43,7 @@
             style="@style/editext_graybg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:drawableLeft="@drawable/ic_username"
+            android:drawableLeft="@mipmap/ic_username"
             android:ems="10"
             android:hint="Username"
             android:inputType="textPersonName"
@@ -54,7 +54,7 @@
             style="@style/editext_graybg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:drawableLeft="@drawable/ic_email"
+            android:drawableLeft="@mipmap/ic_email"
             android:ems="10"
             android:layout_marginBottom="@dimen/pad_10dp"
             android:hint="Email" />
@@ -64,7 +64,7 @@
             style="@style/editext_graybg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:drawableLeft="@drawable/ic_pwd"
+            android:drawableLeft="@mipmap/ic_pwd"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
