@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,8 +81,8 @@ public class ChatRoomActivity extends AppCompatActivity {
                     if (children.getKey().equals(userID)) {
                         for (DataSnapshot child : children.getChildren()) {
                             if (child.getKey().equals("Username")) {
-                               // Log.d("YOOO", child.getValue(String.class));
-                                username=child.getValue(String.class);
+                                // Log.d("YOOO", child.getValue(String.class));
+                                username = child.getValue(String.class);
                             }
                         }
                     }
