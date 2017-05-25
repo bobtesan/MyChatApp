@@ -58,7 +58,7 @@ public class register_activity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(register_activity.this, "You are successfully registered.", Toast.LENGTH_SHORT).show();
-                                DatabaseReference root= FirebaseDatabase.getInstance().getReference().child("Users").child(username.getText().toString());
+                                DatabaseReference root= FirebaseDatabase.getInstance().getReference().child("Users").child(auth.getCurrentUser().getUid());
                                 progressBar.setVisibility(View.VISIBLE);
 
                                 Map<String,Object> map = new HashMap<String, Object>();

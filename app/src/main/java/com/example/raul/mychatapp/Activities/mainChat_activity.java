@@ -40,7 +40,7 @@ public class mainChat_activity extends AppCompatActivity {
     ListView rooms;
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listOfRooms = new ArrayList<>();
-    String email, room_name;
+    String email, room_name,userID;
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Rooms");
 
     @Override
@@ -51,7 +51,8 @@ public class mainChat_activity extends AppCompatActivity {
         rooms = (ListView) findViewById(R.id.listView);
         createRoom = (Button) findViewById(R.id.createRoomB);
 
-        email = getIntent().getExtras().get("get_email").toString();
+        //email = getIntent().getExtras().get("get_email").toString();
+        userID=getIntent().getExtras().get("get_uid").toString();
 
         arrayAdapter = new ArrayAdapter<String>(mainChat_activity.this, android.R.layout.simple_list_item_1, listOfRooms);
         rooms.setAdapter(arrayAdapter);
@@ -98,7 +99,8 @@ public class mainChat_activity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), ChatRoomActivity.class);
                 room_name = rooms.getItemAtPosition(position).toString();
                 i.putExtra("room_name", room_name);
-                i.putExtra("gett_email", email);
+              //  i.putExtra("gett_email", email);
+                i.putExtra("getUid",userID);
                 startActivity(i);
             }
         });

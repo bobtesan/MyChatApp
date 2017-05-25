@@ -30,12 +30,13 @@ public class ChatRoomActivity extends AppCompatActivity {
     EditText message;
     TextView conversation;
 
-    // String email="test";
     String username = "test";
     String roomName;
+    String userID;
 
     DatabaseReference root;
     DatabaseReference getUser;
+
     private String temp_key;
 
     @Override
@@ -49,7 +50,8 @@ public class ChatRoomActivity extends AppCompatActivity {
         conversation = (TextView) findViewById(R.id.textView2);
 
         roomName = getIntent().getExtras().get("room_name").toString();
-        //email=getIntent().getExtras().get("gett_email").toString();
+        userID = getIntent().getExtras().get("getUid").toString();
+
 
         setTitle(" Room - " + roomName);
 
@@ -74,13 +76,16 @@ public class ChatRoomActivity extends AppCompatActivity {
         getUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String user;
                 for (DataSnapshot children : dataSnapshot.getChildren()) {
-                    for (DataSnapshot child : children.getChildren()) {
-                        if (child.getKey().equals("Username")) {
-                            Log.d("YOOO", child.getValue(String.class));
+                    if (children.getKey().equals(userID)) {
+                        for (DataSnapshot child : children.getChildren()) {
+                            if (child.getKey().equals("Username")) {
+                               // Log.d("YOOO", child.getValue(String.class));
+                                username=child.getValue(String.class);
+                            }
                         }
                     }
+
                 }
             }
 

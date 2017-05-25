@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     Button loginB;
     FirebaseAuth auth;
     ProgressBar progressBar;
-    String getEmail;
 
 
     @Override
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "You are logged in.", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, mainChat_activity.class);
 
-                                getEmail = intent.putExtra("get_email", email.getText().toString()).toString();
-
+                              //  getEmail = intent.putExtra("get_email", email.getText().toString()).toString();
+                                intent.putExtra("get_uid",auth.getCurrentUser().getUid().toString());
                                 startActivity(intent);
                                 finish();
                             }
