@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raul.mychatapp.R;
@@ -34,13 +35,17 @@ public class rooms_activity extends AppCompatActivity {
 
     Button createRoom;
     EditText roomName;
+    TextView tv;
     ListView rooms;
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listOfRooms = new ArrayList<>();
-    String room_name,userID;
+    String room_name, userID;
     FloatingActionButton fab;
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Rooms");
+    DatabaseReference getUser;
     AlertDialog.Builder alertDialog;
+    String username = "test";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +55,35 @@ public class rooms_activity extends AppCompatActivity {
         roomName = (EditText) findViewById(R.id.roomName);
         rooms = (ListView) findViewById(R.id.listView);
         createRoom = (Button) findViewById(R.id.createRoomB);
-        fab=(FloatingActionButton)findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        tv = (TextView) findViewById(R.id.textView3);
 
 
-        userID=getIntent().getExtras().get("get_uid").toString();
+        userID = getIntent().getExtras().get("get_uid").toString();
+        getUser = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        getUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot children : dataSnapshot.getChildren()) {
+                    if (children.getKey().equals(userID)) {
+                        for (DataSnapshot child : children.getChildren()) {
+                            if (child.getKey().equals("Username")) {
+                                username = child.getValue(String.class);
+                                tv.setText("You are logged in as " + username);
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         arrayAdapter = new ArrayAdapter<String>(rooms_activity.this, android.R.layout.simple_list_item_1, listOfRooms);
         rooms.setAdapter(arrayAdapter);
@@ -95,7 +125,7 @@ public class rooms_activity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), chatroom_activity.class);
                 room_name = rooms.getItemAtPosition(position).toString();
                 i.putExtra("room_name", room_name);
-                i.putExtra("getUid",userID);
+                i.putExtra("getUid", userID);
                 startActivity(i);
             }
         });
@@ -103,7 +133,7 @@ public class rooms_activity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog=new AlertDialog.Builder(rooms_activity.this);
+                alertDialog = new AlertDialog.Builder(rooms_activity.this);
                 alertDialog.setTitle("Room name");
                 alertDialog.setMessage("Please enter room name");
 
@@ -112,31 +142,19 @@ public class rooms_activity extends AppCompatActivity {
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
 
-                alertDialog.setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Rooms").child(input.getText().toString());
-                                ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        if(dataSnapshot.getKey().equals(input.getText().toString())){
-                                            Toast.makeText(getApplicationContext(),"Room name already exists.",Toast.LENGTH_SHORT).show();
-                                            return;
-                                        }
-                                        else{
-                                            Map<String, Object> map = new HashMap<String, Object>();
-                                            map.put(input.getText().toString(), "");
-                                            root.updateChildren(map);
-                                        }
-                                    }
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rooms");
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
-                            }
-                        });
+                                //if (dataSnapshot.getValue().equals(input.getText().toString())) {
+                                //    Toast.makeText(getApplicationContext(), "Room name already exists.", Toast.LENGTH_SHORT).show();
+                               // } else {
+                               //     Map<String, Object> map = new HashMap<String, Object>();
+                               //     map.put(input.getText().toString(), "");
+                               //     root.updateChildren(map);
+                              //  }
+                    }
+                });
                 alertDialog.show();
             }
         });

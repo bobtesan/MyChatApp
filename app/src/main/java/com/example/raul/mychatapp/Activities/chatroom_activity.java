@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -76,7 +76,6 @@ public class chatroom_activity extends AppCompatActivity {
                     if (children.getKey().equals(userID)) {
                         for (DataSnapshot child : children.getChildren()) {
                             if (child.getKey().equals("Username")) {
-                                // Log.d("YOOO", child.getValue(String.class));
                                 username = child.getValue(String.class);
                             }
                         }
