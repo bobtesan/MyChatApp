@@ -5,31 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.raul.mychatapp.Activities.MainActivity">
+    tools:context="com.example.raul.mychatapp.Activities.login_activity"
+    android:background="@mipmap/blue_background">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="MyChatApp"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:background="@color/main_color_green"
-        android:layout_marginBottom="@dimen/pad_10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_weight="0.37"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:weightSum="1">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@mipmap/logo_login"/>
+            android:layout_height="match_parent"
+            android:layout_weight="0.81"
+            app:srcCompat="@mipmap/logo_login" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,7 +36,7 @@
             style="@style/editext_graybg"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:drawableLeft="@mipmap/ic_username"
+            android:drawableLeft="@mipmap/ic_email"
             android:ems="10"
             android:hint="Email"
             android:layout_marginBottom="@dimen/pad_10dp"/>
@@ -63,25 +56,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal"
-        android:padding="@dimen/pad_15dp"
-        android:layout_weight="1">
+        android:padding="@dimen/pad_15dp">
 
         <Button
             android:id="@+id/LoginB"
-            style="@style/btn_white_large"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:text="LOGIN" />
+            android:background="@drawable/stroke_outside"
+            android:text="LOGIN"
+            android:textColor="#ffff"/>
 
         <Button
             android:id="@+id/RegisterB"
-            style="@style/btn_white_large"
+            android:background="@drawable/stroke_outside"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="@dimen/pad_10dp"
             android:layout_weight="1"
+            android:textColor="#ffff"
             android:text="REGISTER" />
     </LinearLayout>
 

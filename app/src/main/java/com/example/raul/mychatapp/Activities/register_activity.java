@@ -35,7 +35,7 @@ public class register_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_activity);
+        setContentView(R.layout.activity_register);
         auth = FirebaseAuth.getInstance();
         pass = (EditText) findViewById(R.id.passEditT);
         email = (EditText) findViewById(R.id.emailEditT);
@@ -67,7 +67,7 @@ public class register_activity extends AppCompatActivity {
                                 root.updateChildren(map); // Users-> test
 
 
-                                Intent i = new Intent(register_activity.this, MainActivity.class);
+                                Intent i = new Intent(register_activity.this, login_activity.class);
                                 startActivity(i);
                                 finish();
                             }

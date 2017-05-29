@@ -5,18 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.raul.mychatapp.Activities.mainChat_activity"
-    android:weightSum="2">
+    tools:context="com.example.raul.mychatapp.Activities.rooms_activity"
+    android:weightSum="2"
+    android:background="@mipmap/blue_background">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="@color/main_color_green"></LinearLayout>
 
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2">
@@ -24,32 +18,36 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="" />
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="#ffff"
+            android:textSize="25sp" />
     </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:padding="@dimen/pad_10dp">
 
         <EditText
             android:id="@+id/message"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2"
-            android:ems="10"
+            android:background="@drawable/stroke_outside"
             android:hint="Message..."
-            android:inputType="textPersonName" />
+            android:padding="@dimen/pad_5dp"
+            android:inputType="textPersonName"
+            android:textColor="#ffff"/>
 
         <Button
             android:id="@+id/sendMessage"
-            android:layout_width="71dp"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ic_send"
-            android:text="" />
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_10dp"
+            android:background="@mipmap/ic_send"/>
     </LinearLayout>
 
 </LinearLayout>

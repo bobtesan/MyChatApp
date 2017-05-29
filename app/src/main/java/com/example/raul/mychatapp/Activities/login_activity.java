@@ -15,9 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class login_activity extends AppCompatActivity {
 
     EditText email;
     EditText pass;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
 
         email = (EditText) findViewById(R.id.emailEditT);
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         registerB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, register_activity.class);
+                Intent i = new Intent(login_activity.this, register_activity.class);
                 startActivity(i);
             }
         });
@@ -54,19 +53,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (pass.getText().toString().length() == 0 || email.getText().length() == 0) {
-                    Toast.makeText(MainActivity.this, "Fields cannot be empty.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(login_activity.this, "Fields cannot be empty.", Toast.LENGTH_SHORT).show();
                 }
-                if (pass.getText().toString().length() < 4 || email.getText().length() < 4) {
-                    Toast.makeText(MainActivity.this, "Email is too short.", Toast.LENGTH_SHORT).show();
-                } else {
+                else {
                     progressBar.setVisibility(View.VISIBLE);
-                    auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    auth.signInWithEmailAndPassword(email.getText().toString(), pass.getText().toString()).addOnCompleteListener(login_activity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             progressBar.setVisibility(View.INVISIBLE);
                             if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity.this, "You are logged in.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, mainChat_activity.class);
+                                Toast.makeText(login_activity.this, "You are logged in.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(login_activity.this, rooms_activity.class);
 
                               //  getEmail = intent.putExtra("get_email", email.getText().toString()).toString();
                                 intent.putExtra("get_uid",auth.getCurrentUser().getUid().toString());
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (pass.getText().toString().length() < 4) {
                                     pass.setError("Your password is too short.");
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Authentification error." + task.getException(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(login_activity.this, "Authentification error." + task.getException(), Toast.LENGTH_LONG).show();
                                 }
                             }
                         }
