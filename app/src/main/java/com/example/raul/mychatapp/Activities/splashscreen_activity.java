@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class splashscreen_activity extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 2000;
-    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,11 @@ public class splashscreen_activity extends AppCompatActivity {
         setContentView(R.layout.activity_splashscreen);
 
 
-            if (isNetworkAvailable()) {
+        if(isNetworkAvailable()) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Intent i = new Intent(splashscreen_activity.this, rooms_activity.class);
+                startActivity(i);
+            } else {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -35,18 +38,21 @@ public class splashscreen_activity extends AppCompatActivity {
                         finish();
                     }
                 }, SPLASH_TIME_OUT);
-            } else {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setMessage("You don't have internet connection. Please connect and restart the app.");
-                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        finish();
-                    }
-                });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
             }
+        }
+        else{
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage("You don't have internet connection. Please connect and restart the app.");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    finish();
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
 
 
     }

@@ -2,6 +2,7 @@ package com.example.raul.mychatapp.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.raul.mychatapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,12 +41,14 @@ public class rooms_activity extends AppCompatActivity {
     ListView rooms;
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listOfRooms = new ArrayList<>();
+
     String room_name, userID;
     FloatingActionButton fab;
     DatabaseReference root = FirebaseDatabase.getInstance().getReference().child("Rooms");
     DatabaseReference getUser;
     AlertDialog.Builder alertDialog;
     String username = "test";
+    FirebaseAuth auth;
 
 
     @Override
@@ -59,7 +63,8 @@ public class rooms_activity extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.textView3);
 
 
-        userID = getIntent().getExtras().get("get_uid").toString();
+        //userID = getIntent().getExtras().get("get_uid").toString();
+        userID = auth.getInstance().getCurrentUser().getUid();
         getUser = FirebaseDatabase.getInstance().getReference().child("Users");
 
         getUser.addValueEventListener(new ValueEventListener() {
@@ -130,6 +135,7 @@ public class rooms_activity extends AppCompatActivity {
             }
         });
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,21 +144,22 @@ public class rooms_activity extends AppCompatActivity {
                 alertDialog.setMessage("Please enter room name");
 
                 final EditText input = new EditText(rooms_activity.this);
+
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
 
                 alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Rooms");
-
-                                //if (dataSnapshot.getValue().equals(input.getText().toString())) {
-                                //    Toast.makeText(getApplicationContext(), "Room name already exists.", Toast.LENGTH_SHORT).show();
-                               // } else {
-                               //     Map<String, Object> map = new HashMap<String, Object>();
-                               //     map.put(input.getText().toString(), "");
-                               //     root.updateChildren(map);
-                              //  }
+                        if(listOfRooms.contains(input.getText().toString())){
+                            Toast.makeText(getApplicationContext(), "Room name already exists.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else{
+                            Map<String, Object> map = new HashMap<String, Object>();
+                            map.put(input.getText().toString(), "");
+                            root.updateChildren(map);
+                        }
                     }
                 });
                 alertDialog.show();
