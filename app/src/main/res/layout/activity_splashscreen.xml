@@ -11,13 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="1">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="293dp"
-            android:layout_height="357dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:foregroundGravity="center"
             app:srcCompat="@mipmap/logo_login" />
     </LinearLayout>

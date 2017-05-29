@@ -41,7 +41,7 @@ public class rooms_activity extends AppCompatActivity {
     EditText roomName;
     TextView tv;
     ListView rooms;
-    ArrayAdapter<String> arrayAdapter;
+    //ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listOfRooms = new ArrayList<>();
     MyAdapter myAdapter;
 
@@ -107,7 +107,7 @@ public class rooms_activity extends AppCompatActivity {
         });
 
         myAdapter=new MyAdapter(this,listOfRooms);
-        arrayAdapter = new ArrayAdapter<String>(rooms_activity.this, android.R.layout.simple_list_item_1, listOfRooms);
+       // arrayAdapter = new ArrayAdapter<String>(rooms_activity.this, android.R.layout.simple_list_item_1, listOfRooms);
         rooms.setAdapter(myAdapter);
 
         /*createRoom.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +130,8 @@ public class rooms_activity extends AppCompatActivity {
                 }
                 listOfRooms.clear();
                 listOfRooms.addAll(set);
-                arrayAdapter.notifyDataSetChanged();
+                myAdapter.notifyDataSetChanged();
+                //arrayAdapter.notifyDataSetChanged();
 
             }
 
