@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import Adapters.MyAdapter;
+
 public class rooms_activity extends AppCompatActivity {
 
 
@@ -41,6 +43,7 @@ public class rooms_activity extends AppCompatActivity {
     ListView rooms;
     ArrayAdapter<String> arrayAdapter;
     ArrayList<String> listOfRooms = new ArrayList<>();
+    MyAdapter myAdapter;
 
     String room_name, userID;
     FloatingActionButton fab;
@@ -49,6 +52,7 @@ public class rooms_activity extends AppCompatActivity {
     AlertDialog.Builder alertDialog;
     String username = "test";
     FirebaseAuth auth;
+    Button logoutB;
 
 
     @Override
@@ -61,6 +65,19 @@ public class rooms_activity extends AppCompatActivity {
         createRoom = (Button) findViewById(R.id.createRoomB);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         tv = (TextView) findViewById(R.id.textView3);
+        logoutB=(Button)findViewById(R.id.logoutB);
+
+        logoutB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth=auth.getInstance();
+                auth.signOut();
+                Intent i=new Intent(rooms_activity.this,login_activity.class);
+                startActivity(i);
+            }
+        });
+
+
 
 
         //userID = getIntent().getExtras().get("get_uid").toString();
@@ -89,9 +106,9 @@ public class rooms_activity extends AppCompatActivity {
             }
         });
 
-
+        myAdapter=new MyAdapter(this,listOfRooms);
         arrayAdapter = new ArrayAdapter<String>(rooms_activity.this, android.R.layout.simple_list_item_1, listOfRooms);
-        rooms.setAdapter(arrayAdapter);
+        rooms.setAdapter(myAdapter);
 
         /*createRoom.setOnClickListener(new View.OnClickListener() {
             @Override

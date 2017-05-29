@@ -29,6 +29,7 @@ public class splashscreen_activity extends AppCompatActivity {
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 Intent i = new Intent(splashscreen_activity.this, rooms_activity.class);
                 startActivity(i);
+                finish();
             } else {
                 new Handler().postDelayed(new Runnable() {
                     @Override

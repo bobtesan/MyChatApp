@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import Adapters.MyAdapter;
+
 public class chatroom_activity extends AppCompatActivity {
 
     Button sendMessage;
@@ -43,6 +45,7 @@ public class chatroom_activity extends AppCompatActivity {
         sendMessage = (Button) findViewById(R.id.sendMessage);
         message = (EditText) findViewById(R.id.message);
         conversation = (TextView) findViewById(R.id.textView2);
+
 
         roomName = getIntent().getExtras().get("room_name").toString();
         userID = getIntent().getExtras().get("getUid").toString();
