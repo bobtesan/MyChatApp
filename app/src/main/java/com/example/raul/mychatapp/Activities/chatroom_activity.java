@@ -2,6 +2,7 @@ package com.example.raul.mychatapp.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +46,7 @@ public class chatroom_activity extends AppCompatActivity {
         sendMessage = (Button) findViewById(R.id.sendMessage);
         message = (EditText) findViewById(R.id.message);
         conversation = (TextView) findViewById(R.id.textView2);
+        conversation.setMovementMethod(new ScrollingMovementMethod());
 
 
         roomName = getIntent().getExtras().get("room_name").toString();
