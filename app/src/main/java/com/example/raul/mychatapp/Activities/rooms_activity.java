@@ -74,6 +74,7 @@ public class rooms_activity extends AppCompatActivity {
                 auth.signOut();
                 Intent i=new Intent(rooms_activity.this,login_activity.class);
                 startActivity(i);
+                finish();
             }
         });
 
